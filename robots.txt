@@ -1,0 +1,8 @@
+User-agent: *
+Host: 
+Allow: /
+
+Disallow: /public/*.*
+Disallow: /documents/*.*
+Disallow: /search
+Disallow: /templates/*.*
