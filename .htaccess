@@ -1,0 +1,21 @@
+# -ExecCGI запрещает запуск CGI скриптов.
+# -Indexes запрещает показывать содержимое каталогов
+# -Includes запрещает SSI
+# +FollowSymLinks позволяет использовать символические ссылки на файлы или каталоги, не находящиеся в пределах корня вашего сайта.
+Options All -ExecCGI -Indexes -Includes +FollowSymLinks
+AddDefaultCharset utf-8
+RewriteEngine on
+RewriteBase /
+
+# 301 редирект с www на без www (главное зеркало – домен без www)
+RewriteCond %{HTTP_HOST} ^www\.(.*)$
+RewriteRule ^(.*)$ https://%1/$1 [L,R=301] 
+
+RewriteCond %{HTTP_HOST} ^sch290\.ru$ [NC]
+RewriteRule ^(.*)$ http://sh290.krsl.gov.spb.ru/$1 [R=301,L]
+
+# если директория или файл существуют, использовать их напрямую
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+# иначе отправлять запрос на файл index.php
+RewriteRule ^(.*)$ index.php
